@@ -10,6 +10,6 @@ endif
 " Keywords 
 syntax keyword umajinkeyword define instance method end
 syntax keyword umajinkeyword if elseif loop while return
-
-highlight link potionKeyword Keyword
-
+syntax keyword umajinprimatives int string 
+highlight link umajinkeyword Keyword
+highlight link umajinprimatives Keyword
