@@ -11,5 +11,8 @@ endif
 syntax keyword umajinkeyword define instance method end
 syntax keyword umajinkeyword if elseif loop while return
 syntax keyword umajinprimatives int string 
+syntax match umajincomment "\/\/.*$"
+
 highlight link umajinkeyword Keyword
 highlight link umajinprimatives Keyword
+highlight link umajincomment Comment
