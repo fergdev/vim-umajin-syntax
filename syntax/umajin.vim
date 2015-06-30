@@ -13,6 +13,15 @@ syntax keyword umajinkeyword if elseif loop while return
 syntax keyword umajinprimatives int string 
 syntax match umajincomment "\/\/.*$"
 
+#Operaters
+syntax match umajinoperator "\v\*"
+syntax match umajinoperator "\v/"
+syntax match umajinoperator "\v\+"
+syntax match umajinoperator "\v\+\+"
+syntax match umajinoperator "\v-"
+syntax match umajinoperator "\v--"
+
+highlight link umajinoperator Operator
 highlight link umajinkeyword Keyword
 highlight link umajinprimatives Keyword
 highlight link umajincomment Comment
