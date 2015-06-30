@@ -8,4 +8,8 @@ if exists("b:current_syntax")
 endif
 
 " Keywords 
-syn keyword define instance 
+syntax keyword umajinkeyword define instance method end
+syntax keyword umajinkeyword if elseif loop while return
+
+highlight link potionKeyword Keyword
+
