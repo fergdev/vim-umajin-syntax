@@ -1,0 +1,132 @@
+int i = 0 // this is a commment
+
+/* this
+is
+a
+multiline
+comment
+*/
+string s1 = "hello"
+string s2 = 'world'
+string s3 = `something else`
+
+constant int bam = 1
+const int bam2 = 2
+
+define group my_g
+end
+
+include 'my_file.u'
+include_once 'another_file.u'
+
+if true 
+    println('hello')
+elseif false
+    println('somethiong')
+end
+
+int i = 0 
+loop i < 1000
+    i++
+    exitloop
+end
+
+method do_something() 
+    println('Do something')
+end
+
+method do_overried() override
+    println('override')
+end
+
+method do_returns() returns string
+    return 'hello world'
+end
+
+raise do_something()
+
+instance object some_obj
+end
+
+switch i 
+
+case 1: println('got a 1')
+case 2: println('got a 2')
+end
+
+instance object prop_obj
+    property string s = ''
+end
+
+a or b
+a xor b
+a and b
+a not b
+
+bool b = true
+int i = 1
+int8 i = 1
+int16 i = 1
+int32 i = 1
+int64 i = 1
+uint i = 1
+uint8 i = 1
+uint16 i = 1
+uint32 i = 1
+uint64 i = 1
+real r = 1.0
+float f = 1.0
+real32 r = 1.0
+double d = 1.0
+real64 r64 = 1.0
+
+bool t = true
+bool f = false
+bool n = null
+
+if t || b && c | d ^ e & f
+    do_something()
+end
+
+if a == b && b != c
+    do_something()
+end
+
+if a < b && b <= c || c > d || c >= e
+    do_something()
+end
+
+c = a << b
+c = b >> a
+c = a + b
+c = a - b
+c = a * b
+c = a / b
+c = a % b
+
+c++
+c--
+c = !a
+c = ~a
+
+c = (a)
+c = {b}
+c = [d]
+c = b.a
+c = b
+c += a
+c -= a
+c *= a
+
+c /= a
+c %= a
+c ^= a
+c <<= a
+c >>= a
+c != a
+c &= a
+
+c:b()
+c::b()
+c = 1;
+a = c ? b
