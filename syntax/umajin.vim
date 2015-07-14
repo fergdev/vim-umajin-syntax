@@ -110,14 +110,21 @@ syntax match umajinOperators /::/
 syntax match umajinOperators /;/
 syntax match umajinOperators /?/
 
+syntax match umajinNumber "\v<\d+>"
+syntax match umajinNumber "\v<\d+\.\d+>"
+syntax match umajinNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
+syntax match umajinNumber "\v<0x\x+([Pp]-?)?\x+>"
+syntax match umajinNumber "\v<0b[01]+>"
+syntax match umajinNumber "\v<0o\o+>"
+
 highlight link umajinSingleComment Type
 highlight link umajinMultiComment Type
-"highlight link umajinOperators Type 
+highlight link umajinOperators Type 
 highlight link umajinKeyword Keyword
 highlight link umajinPrimatives Type
 highlight link umajinConstants Constant
 highlight link umajinStringQuot String
 highlight link umajinStringApos String
 highlight link umajinStringBack String
-
+highlight link umajinNumber Type
 
