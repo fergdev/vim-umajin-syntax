@@ -59,6 +59,13 @@ syntax keyword umajinPrimatives real32
 syntax keyword umajinPrimatives double
 syntax keyword umajinPrimatives real64
 
+" Complex types
+syntax keyword umajinComplexTypes object
+syntax keyword umajinComplexTypes group
+syntax keyword umajinComplexTypes list
+syntax keyword umajinComplexTypes timer
+syntax keyword umajinComplexTypes map
+
 " Constants
 syntax keyword umajinConstants true
 syntax keyword umajinConstants false
@@ -124,7 +131,7 @@ highlight link umajinConstants Constant
 highlight link umajinStringQuot String
 highlight link umajinStringApos String
 highlight link umajinStringBack String
-highlight link umajinNumber Type
+highlight link umajinNumber Number
 highlight link umajinSingleComment Comment
 highlight link umajinMultiComment Comment
-
+highlight link umajinComplexTypes StorageClass
