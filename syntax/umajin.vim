@@ -25,6 +25,7 @@ syntax keyword umajinKeyword end
 syntax keyword umajinKeyword include
 syntax keyword umajinKeyword include_once
 syntax keyword umajinKeyword if
+syntax keyword umajinKeyword else
 syntax keyword umajinKeyword elseif
 syntax keyword umajinKeyword loop
 syntax keyword umajinKeyword exitloop
