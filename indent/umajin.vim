@@ -1,26 +1,8 @@
-" idnent/umajin.vim
-
-"setlocal indentexpr=UmajinIndent()
-
-"function! UmajinIndent()
-    "let line = getline(v:lnum)
-    "let previousNum = prevnonblank(v:lnum-1)
-    "let previous = getline(previousNum)
-
-    "if previous =~ "{" && previous !~ "}" && line !~ "}" && line !~ ":$"
-        "return indent(previousNum) + &tabstop
-
-    "endif
-
-"endfunction
-
-
-
 " Vim indent file
-" Language:    
-" Maintainer: 
-" Created:   
-" Last Change: 
+" Language:    Umajin
+" Maintainer:  Fergus Hewosn
+" Created:     A long time ago, in a place very far away...
+" Last Change: Recently!!!
 
 
 if exists("b:did_indent")
@@ -29,17 +11,17 @@ endif
 let b:did_indent = 1
 
 setlocal indentexpr=GetUmajinIndent(v:lnum)
-setlocal indentkeys&
-setlocal indentkeys+==end;,==const,==type,==var,==begin,==repeat,==until,==for
-setlocal indentkeys+==program,==function,==procedure,==object,==private
-setlocal indentkeys+==record,==if,==else,==case
+"setlocal indentkeys&
+"setlocal indentkeys+==end;,==const,==type,==var,==begin,==repeat,==until,==for
+"setlocal indentkeys+==program,==function,==procedure,==object,==private
+"setlocal indentkeys+==record,==if,==else,==case
 
 if exists("*GetUmajinIndent")
 	finish
 endif
 
 
-function! s:GetPrevNonCommentLineNum( line_num )
+function! s:GetPrevNonCommentLineNum(line_num)
 
 	" Skip lines starting with a comment
 	let SKIP_LINES = '^\s*\(\((\*\)\|\(\*\ \)\|\(\*)\)\|{\|}\)'
@@ -56,10 +38,7 @@ function! s:GetPrevNonCommentLineNum( line_num )
 endfunction
 
 
-function! GetUmajinIndent( line_num )
-    echom "GetUmajinIndent" " NNNNAPaLMMMM
-    
-	" Line 0 a2005 Jun 15lways goes at column 0
+function! GetUmajinIndent(line_num)
 	if a:line_num == 0
 		return 0
 	endif
@@ -75,115 +54,19 @@ function! GetUmajinIndent( line_num )
 	let prev_codeline = getline( prev_codeline_num )
 	let indnt = indent( prev_codeline_num )
 
-	" These items have nothing before or after (not even a comment), and
-	" go on column 0. Make sure that the ^\s* is followed by \( to make
-	" ORs work properly, and not include the start of line (this must
-	" always appear).
-	" The bracketed expression with the underline is a routine
-	" separator. This is one case where we do indent comment lines.
-	if this_codeline =~ '^\s*\((\*\ _\+\ \*)\|\<\(const\|var\)\>\)$'
-		return 0
-	endif
-
-	" These items may have text after them, and go on column 0 (in most
-	" cases). The problem is that "function" and "procedure" keywords
-	" should be indented if within a class declaration.
-	"if this_codeline =~ '^\s*\<\(program\|type\|uses\|procedure\|function\)\>'
-		"return 0
-	"endif
 	if this_codeline =~ '^\s*\<\(include\|include_once\|define\)\>'
 		return 0
 	endif
 
-	" BEGIN
-	" If the begin does not come after "if", "for", or "else", then it
-	" goes in column 0
-	if this_codeline =~ '^\s*begin\>' && prev_codeline !~ '^\s*\<\(if\|while\|else\)\>'
-		return 0
-	endif
-
-	" These keywords are indented once only.
-	if this_codeline =~ '^\s*\<\(private\)\>'
-		return &shiftwidth
-	endif
-
-	" If the PREVIOUS LINE contained these items, the current line is
-	" always indented once.
-	if prev_codeline =~ '^\s*\<\(type\|uses\)\>'
-		return &shiftwidth
-	endif
-
-	" These keywords are indented once only. Possibly surrounded by
-	" other chars.
-	if this_codeline =~ '^.\+\<\(object\|record\)\>'
-		return &shiftwidth
-	endif
-
-	" If the previous line was indenting...
-	if prev_codeline =~ '^\s*\<\(for\|if\|case\|else\|end\|else\|method\)\>'
-		" then indent.
-		let indnt = indnt + &shiftwidth
-		" BUT... if this is the start of a multistatement block then we
-		" need to align the begin with the previous line.
-		if this_codeline =~ '^\s*begin\>'
-			return indnt - &shiftwidth
-		endif
-
-		" We also need to keep the indentation level constant if the
-		" whole if-then statement was on one line.
-		if prev_codeline =~ '\<then\>.\+'
-			let indnt = indnt - &shiftwidth
-		endif
-	endif
-
-	" PREVIOUS-LINE BEGIN
 	" If the previous line was an indenting keyword then indent once...
-	if prev_codeline =~ '^\s*\<\(const\|var\|begin\|repeat\|private\)\>'
-		" But only if this is another var in a list.
-		if this_codeline !~ '^\s*var\>'
-			return indnt + &shiftwidth
-		endif
-	endif
-
-	" PREVIOUS-LINE BEGIN
-	" Indent code after a case statement begin
-	if prev_codeline =~ '\:\ begin\>'
+    if prev_codeline =~ '^\s*\<\(define\|method\|instance\|define\|if\|else\|case\)\>'
 		return indnt + &shiftwidth
-	endif
-
-	" These words may have text before them on the line (hence the .*)
-	" but are followed by nothing. Always indent once only.
-	if prev_codeline =~ '^\(.*\|\s*\)\<\(object\|record\|method\)\>$'
-		return indnt + &shiftwidth
-	endif
-
-	" If we just closed a bracket that started on a previous line, then
-	" unindent. But don't return yet -- we need to check for further
-	" unindentation (for end/until/else)
-	if prev_codeline =~ '^[^(]*[^*])'
-		let indnt = indnt - &shiftwidth
 	endif
 
 	" At the end of a block, we have to unindent both the current line
 	" (the "end" for instance) and the newly-created line.
 	if this_codeline =~ '^\s*\<\(end\|else\)\>'
 		return indnt - &shiftwidth
-	endif
-
-	" If we have opened a bracket and it continues over one line,
-	" then indent once.
-	"
-	" RE = an opening bracket followed by any amount of anything other
-	" than a closing bracket and then the end-of-line.
-	"
-	" If we didn't include the end of line, this RE would match even
-	" closed brackets, since it would match everything up to the closing
-	" bracket.
-	"
-	" This test isn't clever enough to handle brackets inside strings or
-	" comments.
-	if prev_codeline =~ '([^*]\=[^)]*$'
-		return indnt + &shiftwidth
 	endif
 
 	return indnt
