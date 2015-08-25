@@ -118,12 +118,12 @@ syntax match umajinOperators /::/
 syntax match umajinOperators /;/
 syntax match umajinOperators /?/
 
-syntax match umajinNumber "\v<\d+>"
-syntax match umajinNumber "\v<\d+\.\d+>"
-syntax match umajinNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
-syntax match umajinNumber "\v<0x\x+([Pp]-?)?\x+>"
-syntax match umajinNumber "\v<0b[01]+>"
-syntax match umajinNumber "\v<0o\o+>"
+"syntax match umajinNumber "\v<\d+>"
+"syntax match umajinNumber "\v<\d+\.\d+>"
+"syntax match umajinNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
+"syntax match umajinNumber "\v<0x\x+([Pp]-?)?\x+>"
+"syntax match umajinNumber "\v<0b[01]+>"
+"syntax match umajinNumber "\v<0o\o+>"
 
 highlight link umajinOperators Type 
 highlight link umajinKeyword Keyword
