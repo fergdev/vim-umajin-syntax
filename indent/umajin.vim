@@ -17,10 +17,10 @@
 
 
 " Vim indent file
-" Language:    Pascal
-" Maintainer:  Neil Carter <n.carter@swansea.ac.uk>
-" Created:     2004 Jul 13
-" Last Change: 2005 Jun 15
+" Language:    
+" Maintainer: 
+" Created:   
+" Last Change: 
 
 
 if exists("b:did_indent")
@@ -34,7 +34,7 @@ setlocal indentkeys+==end;,==const,==type,==var,==begin,==repeat,==until,==for
 setlocal indentkeys+==program,==function,==procedure,==object,==private
 setlocal indentkeys+==record,==if,==else,==case
 
-if exists("*GetPascalIndent")
+if exists("*GetUmajinIndent")
 	finish
 endif
 
@@ -57,7 +57,9 @@ endfunction
 
 
 function! GetUmajinIndent( line_num )
-	" Line 0 always goes at column 0
+    echom "GetUmajinIndent" " NNNNAPaLMMMM
+    
+	" Line 0 a2005 Jun 15lways goes at column 0
 	if a:line_num == 0
 		return 0
 	endif
@@ -86,14 +88,17 @@ function! GetUmajinIndent( line_num )
 	" These items may have text after them, and go on column 0 (in most
 	" cases). The problem is that "function" and "procedure" keywords
 	" should be indented if within a class declaration.
-	if this_codeline =~ '^\s*\<\(program\|type\|uses\|procedure\|function\)\>'
+	"if this_codeline =~ '^\s*\<\(program\|type\|uses\|procedure\|function\)\>'
+		"return 0
+	"endif
+	if this_codeline =~ '^\s*\<\(include\|include_once\|define\)\>'
 		return 0
 	endif
 
 	" BEGIN
 	" If the begin does not come after "if", "for", or "else", then it
 	" goes in column 0
-	if this_codeline =~ '^\s*begin\>' && prev_codeline !~ '^\s*\<\(if\|for\|else\)\>'
+	if this_codeline =~ '^\s*begin\>' && prev_codeline !~ '^\s*\<\(if\|while\|else\)\>'
 		return 0
 	endif
 
@@ -115,7 +120,7 @@ function! GetUmajinIndent( line_num )
 	endif
 
 	" If the previous line was indenting...
-	if prev_codeline =~ '^\s*\<\(for\|if\|case\|else\|end\ else\)\>'
+	if prev_codeline =~ '^\s*\<\(for\|if\|case\|else\|end\|else\|method\)\>'
 		" then indent.
 		let indnt = indnt + &shiftwidth
 		" BUT... if this is the start of a multistatement block then we
@@ -148,7 +153,7 @@ function! GetUmajinIndent( line_num )
 
 	" These words may have text before them on the line (hence the .*)
 	" but are followed by nothing. Always indent once only.
-	if prev_codeline =~ '^\(.*\|\s*\)\<\(object\|record\)\>$'
+	if prev_codeline =~ '^\(.*\|\s*\)\<\(object\|record\|method\)\>$'
 		return indnt + &shiftwidth
 	endif
 
@@ -161,7 +166,7 @@ function! GetUmajinIndent( line_num )
 
 	" At the end of a block, we have to unindent both the current line
 	" (the "end" for instance) and the newly-created line.
-	if this_codeline =~ '^\s*\<\(end\|until\|else\)\>'
+	if this_codeline =~ '^\s*\<\(end\|else\)\>'
 		return indnt - &shiftwidth
 	endif
 
